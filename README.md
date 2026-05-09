@@ -7,7 +7,7 @@ hashing (message digest), hash based message authentication code (HMAC) & digita
 We covered how to implement basic ciphers in python. However, as i began to learn the C programming language, I wanted to 
 take things further and implement the cipher in C resulting in this.
 
-This cipher is **NOT** secure, it operates on 16 byte blocks using an 8 bit key. The cipher can be made more secure by increasing the key & block 
+This cipher is **NOT** secure, it operates on 16 byte blocks using an 16 bit key. The cipher can be made more secure by increasing the key & block 
 size however the code does not account for varying key sizes or block sizes. Furthermore, the cipher itself is also very simple and can be broken via brute-forcing.
 This is just an exercise to improve my cryptographic knowledge and develop my programming skills and is posted for educational purposes only.
 
