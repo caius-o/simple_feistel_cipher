@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define BLOCK_SIZE 16 
-#define KEY 0xAB
+#define KEY 0xABAB
 
 int initial_permutation[] = {6, 9, 0, 3, 2, 11, 15, 12, 1, 4, 13, 5, 10, 7, 8, 14};
 int inverse_permutation[] = {2, 8, 4, 3, 9, 11, 0, 13, 14, 1, 12, 5, 7, 10, 15, 6};
@@ -46,7 +46,7 @@ void xor(uint8_t* block, uint8_t* key)
 {
     for (int i = 0; i < BLOCK_SIZE/2; i++)
     {
-        block[i] ^= key[i];
+        block[i] ^= *key;
     }
 }
 
@@ -76,7 +76,7 @@ void block_function(uint8_t* block, uint8_t* key)
     free(right);
 }
 
-void encrypt_chunk(uint8_t* block, uint8_t* key)
+void encrypt_chunk(uint8_t* block, uint16_t* key)
 { 
     uint8_t* key_right = calloc(BLOCK_SIZE/2, sizeof(uint8_t));
     uint8_t* key_left = calloc(BLOCK_SIZE/2, sizeof(uint8_t));
@@ -91,7 +91,7 @@ void encrypt_chunk(uint8_t* block, uint8_t* key)
     free(key_left);
 }
 
-void decrypt_chunk(uint8_t* block, uint8_t* key)
+void decrypt_chunk(uint8_t* block, uint16_t* key)
 {   
     uint8_t* key_right = calloc(BLOCK_SIZE/2, sizeof(uint8_t));
     uint8_t* key_left = calloc(BLOCK_SIZE/2, sizeof(uint8_t));
@@ -114,10 +114,10 @@ int main(int argc, char* argv[])
     //     return 1;
     // }
 
-    uint8_t key = KEY;
+    uint16_t key = KEY;
     uint8_t block[BLOCK_SIZE];
     printf("%zu\n", sizeof(block));
-    memset(block, 0, sizeof block);
+    memset(block, 0, sizeof(block));
 
     // Read in binary for encryption
     FILE* in = fopen("test.txt", "rb");
@@ -136,7 +136,7 @@ int main(int argc, char* argv[])
     {
         if (bytes_read < BLOCK_SIZE)
         {
-            memset(block + bytes_read, 0, BLOCK_SIZE - bytes_read);
+            memset((block + bytes_read), 0, (BLOCK_SIZE - bytes_read));
         }
 
         encrypt_chunk(block, &key);
@@ -160,7 +160,7 @@ int main(int argc, char* argv[])
     {
         if (bytes_read < BLOCK_SIZE)
         {
-            memset(block + bytes_read, 0, BLOCK_SIZE - bytes_read);
+            memset((block + bytes_read), 0, (BLOCK_SIZE - bytes_read));
         }
 
         decrypt_chunk(block, &key);
