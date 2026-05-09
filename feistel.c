@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#define BLOCK_SIZE  16
+#define BLOCK_SIZE  2
 #define KEY 0xAB
 
 int initial_permutation[] = {6, 9, 0, 3, 2, 11, 15, 12, 1, 4, 13, 5, 10, 7, 8, 14};
